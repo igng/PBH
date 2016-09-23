@@ -1,0 +1,44 @@
+### Initialization
+	 Point: 1
+	 Point: 2
+	 Point: 3
+	 Point: 4
+	 Point: 5
+	 Point: 6
+	 Point: 7
+	 Point: 8
+	 Point: 9
+	 Point: 10
+### While loop
+
+		-135.833737 < 10000000000.000000
+			Update: adding point to the population
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		-136.409443 < -135.833737
+			Update: adding point to the population
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-132.817963 --> -132.817963)
+	Update: updating closest point (-133.418887 --> -133.418887)
+		Update: replacing the maximum point
+		-136.539619 < -136.409443
+			Update: adding point to the population
+	Update: updating closest point (-135.833737 --> -135.833737)
+	Update: updating closest point (-136.409443 --> -136.409443)
+	Update: updating closest point (-133.594981 --> -133.594981)
+	Update: updating closest point (-131.047231 --> -131.047231)
+	Update: updating closest point (-134.479624 --> -134.479624)
+		Update: replacing the maximum point
+	Update: updating closest point (-136.539619 --> -136.539619)
+	Update: updating closest point (-133.418887 --> -133.418887)
+	Update: updating closest point (-130.814993 --> -130.814993)
+	Update: updating closest point (-134.479624 --> -134.479624)
+	Update: updating closest point (-129.827865 --> -129.827865)
+	Update: updating closest point (-130.274257 --> -130.274257)
+	Update: updating closest point (-133.478746 --> -133.478746)
+	Update: updating closest point (-129.827865 --> -129.827865)

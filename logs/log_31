@@ -1,0 +1,197 @@
+### Initialization
+	 Point: 1
+	 Point: 2
+	 Point: 3
+	 Point: 4
+	 Point: 5
+	 Point: 6
+	 Point: 7
+	 Point: 8
+	 Point: 9
+	 Point: 10
+### While loop
+
+		-131.797890 < 10000000000.000000
+			Update: adding point to the population
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-125.980154 --> -125.980154)
+	Update: updating closest point (-128.100929 --> -128.100929)
+	Update: updating closest point (-130.219278 --> -130.219278)
+	Update: updating closest point (-131.759316 --> -131.759316)
+	Update: updating closest point (-129.979929 --> -129.979929)
+		Update: replacing the maximum point
+	Update: updating closest point (-128.100929 --> -128.100929)
+	Update: updating closest point (-130.219278 --> -130.219278)
+	Update: updating closest point (-130.759616 --> -130.759616)
+	Update: updating closest point (-129.334330 --> -129.334330)
+	Update: updating closest point (-125.193419 --> -125.193419)
+	Update: updating closest point (-129.979929 --> -129.979929)
+	Update: updating closest point (-129.334330 --> -129.334330)
+	Update: updating closest point (-128.626466 --> -128.626466)
+	Update: updating closest point (-125.193419 --> -125.193419)
+	Update: updating closest point (-129.979929 --> -129.979929)
+	Update: updating closest point (-129.334330 --> -129.334330)
+		Update: replacing the maximum point
+	Update: updating closest point (-128.100929 --> -128.100929)
+	Update: updating closest point (-130.219278 --> -130.219278)
+		-131.799577 < -131.797890
+			Update: adding point to the population
+		Update: replacing the maximum point
+		-132.328290 < -131.799577
+			Update: adding point to the population
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-131.799577 --> -131.799577)
+		Update: replacing the maximum point
+	Update: updating closest point (-130.374925 --> -130.374925)
+	Update: updating closest point (-129.650064 --> -129.650064)
+		Update: replacing the maximum point
+		-132.548738 < -132.328290
+			Update: adding point to the population
+	Update: updating closest point (-129.650064 --> -129.650064)
+		Update: replacing the maximum point
+	Update: updating closest point (-131.438241 --> -131.438241)
+		Update: replacing the maximum point
+	Update: updating closest point (-132.328290 --> -132.328290)
+	Update: updating closest point (-131.790074 --> -131.790074)
+	Update: updating closest point (-131.790074 --> -131.790074)
+		Update: replacing the maximum point
+	Update: updating closest point (-131.438241 --> -131.438241)
+		Update: replacing the maximum point
+	Update: updating closest point (-130.645579 --> -130.645579)
+	Update: updating closest point (-131.799577 --> -132.118405)
+		-132.901785 < -132.548738
+			Update: adding point to the population
+	Update: updating closest point (-130.374925 --> -130.374925)
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-132.901785 --> -132.901785)
+	Update: updating closest point (-131.615257 --> -131.615257)
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-131.438241 --> -131.438241)
+		Update: replacing the maximum point
+	Update: updating closest point (-132.548738 --> -132.548738)
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-131.585417 --> -131.585417)
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-131.790074 --> -131.790074)
+	Update: updating closest point (-132.674653 --> -132.674653)
+	Update: updating closest point (-132.328290 --> -132.328290)
+	Update: updating closest point (-132.059209 --> -132.059209)
+		Update: replacing the maximum point
+	Update: updating closest point (-132.351408 --> -132.351408)
+	Update: updating closest point (-132.328290 --> -132.328290)
+	Update: updating closest point (-131.811074 --> -131.811074)
+	Update: updating closest point (-132.351408 --> -132.351408)
+	Update: updating closest point (-131.811074 --> -131.811074)
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-132.328290 --> -132.328290)
+		-133.104620 < -132.901785
+			Update: adding point to the population
+	Update: updating closest point (-132.328290 --> -132.328290)
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-133.104620 --> -133.104620)
+	Update: updating closest point (-132.059209 --> -132.059209)
+	Update: updating closest point (-132.328290 --> -132.351408)
+	Update: updating closest point (-131.847957 --> -131.847957)
+		Update: replacing the maximum point
+	Update: updating closest point (-132.059087 --> -132.059087)
+		Update: replacing the maximum point
+	Update: updating closest point (-132.059209 --> -132.059209)
+	Update: updating closest point (-132.059209 --> -132.059209)
+	Update: updating closest point (-132.118405 --> -132.118405)
+	Update: updating closest point (-132.059209 --> -132.059209)
+	Update: updating closest point (-132.901785 --> -132.901785)
+	Update: updating closest point (-132.901785 --> -132.901785)
+	Update: updating closest point (-132.059087 --> -132.059087)
+	Update: updating closest point (-132.059087 --> -132.059087)
+		Update: replacing the maximum point
+	Update: updating closest point (-132.901785 --> -132.901785)
+	Update: updating closest point (-132.328290 --> -132.328290)
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-132.328290 --> -132.328290)
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-132.351408 --> -132.351408)
+	Update: updating closest point (-132.901785 --> -132.901785)
+	Update: updating closest point (-132.439706 --> -132.439706)
+		Update: replacing the maximum point
+	Update: updating closest point (-132.495942 --> -132.495942)
+		Update: replacing the maximum point
+	Update: updating closest point (-132.901785 --> -132.901785)
+	Update: updating closest point (-132.439706 --> -132.439706)
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-132.593216 --> -132.593216)
+		Update: replacing the maximum point
+	Update: updating closest point (-132.486351 --> -132.486351)
+	Update: updating closest point (-132.579807 --> -132.579807)
+	Update: updating closest point (-132.901785 --> -132.901785)
+	Update: updating closest point (-132.428982 --> -132.428982)
+	Update: updating closest point (-132.579807 --> -132.579807)
+		Update: replacing the maximum point
+	Update: updating closest point (-132.439706 --> -132.439706)
+	Update: updating closest point (-132.593216 --> -132.593216)
+	Update: updating closest point (-133.104620 --> -133.104620)
+	Update: updating closest point (-132.579807 --> -132.579807)
+	Update: updating closest point (-133.104620 --> -133.104620)
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-133.104620 --> -133.104620)
+	Update: updating closest point (-132.486351 --> -132.486351)
+	Update: updating closest point (-133.104620 --> -133.104620)
+		Update: replacing the maximum point
+	Update: updating closest point (-132.919451 --> -132.919451)
+	Update: updating closest point (-133.104620 --> -133.104620)
+	Update: updating closest point (-133.104620 --> -133.104620)
+	Update: updating closest point (-132.439706 --> -132.439706)
+	Update: updating closest point (-132.439706 --> -132.439706)
+	Update: updating closest point (-132.439706 --> -132.439706)
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-133.104620 --> -133.104620)
+	Update: updating closest point (-133.104620 --> -133.104620)
+		Update: replacing the maximum point
+	Update: updating closest point (-132.618957 --> -132.618957)
+	Update: updating closest point (-133.104620 --> -133.104620)
+	Update: updating closest point (-133.104620 --> -133.104620)
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-133.104620 --> -133.104620)
+	Update: updating closest point (-133.104620 --> -133.104620)
+		Update: replacing the maximum point
+	Update: updating closest point (-132.618957 --> -132.618957)
+	Update: updating closest point (-133.104620 --> -133.104620)
+		Update: replacing the maximum point
+	Update: updating closest point (-132.618957 --> -132.618957)
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-132.998424 --> -132.998424)
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		-133.183574 < -133.104620
+			Update: adding point to the population
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+		Update: replacing the maximum point
+	Update: updating closest point (-132.998424 --> -132.998424)
+##################################################
+
