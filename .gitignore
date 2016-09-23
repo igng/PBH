@@ -1,0 +1,10 @@
+# BINARY files
+*
+!*.*
+
+# MOD files
+*.mod
+
+# RUN files
+*.run
+!rebase.run
