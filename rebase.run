@@ -1,0 +1,273 @@
+reset;
+model modified_LJpot.mod;                               # problem's model
+param LJ;                                               # lennard-jones flag
+let LJ := 1;
+
+param output symbolic;					# filename for the output
+let output := ("./logs/log_" & N);                      # log file
+option solver '../../ampl_linux-intel64/snopt';         # solver
+option solver_msg 0;				        # suppress solver's output
+
+param minimum;                                          # minimum of the current problem
+read minimum < ("./Minima/" & N);
+
+/* Data structures start here */
+param max_p;						# max number of points in the population
+param curr_p;                                           # current number of points in the population
+param start_p;
+let max_p := 20;
+let curr_p := round(max_p/2);
+let start_p := curr_p;
+
+set DIMENSION_SET := 1 .. n;			       
+set POPULATION_SET := 1 .. curr_p;                      
+set max_set ordered;                                            
+set min_set ordered;                                           
+set min_fx_set ordered;
+param orig_pop{p in 1 .. max_p, i in DIMENSION_SET};    # father population
+param mod_pop{p in 1 .. max_p, i in DIMENSION_SET};     # child population
+param pert{p in POPULATION_SET};        		# vector of perturbations
+param orig_value{p in 1 .. max_p};                      # father function value
+param mod_value{p in 1 .. max_p};                       # child function value
+param updated{p in POPULATION_SET};                     # boolean vector of updates
+param st_pop {p in POPULATION_SET, i in DIMENSION_SET}; # starting population
+param min_point{i in DIMENSION_SET};                    # coordinates of the minimum point
+param d_cut;                                            # threshold distance for the "dissimilarity based selection"
+param d_min;                                            # minimum distance
+param d_curr;                                           # distance of the current point
+param d_base;
+param max_index;                                        # index of the point with the maximum function value
+param min_index;                                        # index of the point with the minimum function value
+param n_improve;                                        # number of local improvement tried
+param max_n_improve;                                    # maximum number of improvements
+param base_pert;                                        # base value of perturbation
+param pert_rate;                                        # perturbation increment rate
+param start_pert;                                       # starging value of perturbation
+param max_pert;
+param tollerance;                                       # tollerance to stop the while loop
+param convergence;                                      # boolean flag of convergence
+param f_min;
+param f_max;
+param start_time;
+param closest;
+
+#####################################
+# debugging flags
+param timeout;
+param debugging_print;
+param usefull_print;
+let debugging_print := 0;
+let usefull_print := 0;
+let timeout := 3*60;
+#####################################
+
+/* Initialization starts here */
+let n_improve := 0;
+let max_n_improve := 50;
+let start_pert := 1;
+let pert_rate := 2;
+let base_pert := .01;
+let max_pert := start_pert*10;
+let tollerance := 1e-3;
+let convergence := 0;
+let d_base := 0.5;
+let d_cut := d_base;                                                                # threshold distance
+let {p in POPULATION_SET} pert[p] := start_pert;
+let {p in 1 .. max_p, i in DIMENSION_SET} orig_pop[p,i] := 0;
+let {p in 1 .. max_p} orig_value[p] := 1e10;
+if (usefull_print == 1) then printf "----- N: %d\tMinimum: %f -----\n\n", N, minimum;
+
+if (debugging_print == 1) then printf "### Initialization\n" > (output);
+for {p in POPULATION_SET}
+{
+    if (debugging_print == 1) then printf "\t Point: %d\n", p > (output);
+
+    let {i in DIMENSION_SET} x[i] := Uniform(-pert[p], pert[p]);
+    let {i in DIMENSION_SET} st_pop[p,i] := x[i];
+    solve > /dev/null;
+
+#    repeat while (solve_result_num == 0)                # find an optimized point like a starting one
+#    {
+#        let {i in DIMENSION_SET} x[i] := Uniform(-pert[p], pert[p]);
+#        solve > /dev/null;                             # suppress solver output
+#    }
+#
+    let {i in DIMENSION_SET} orig_pop[p,i] := x[i];     # save optimized point
+}
+
+let start_time := _total_solve_elapsed_time;
+
+if (debugging_print == 1) then printf "### While loop\n\n" > (output);
+repeat 
+{
+    for {p in POPULATION_SET}
+    {
+        let {i in DIMENSION_SET} x[i] := Uniform(orig_pop[p,i] - pert[p], orig_pop[p,i] + pert[p]);
+
+        solve > /dev/null;
+        
+        let mod_value[p] := fx;
+        let {i in DIMENSION_SET} mod_pop[p,i] := x[i];
+    }
+
+    ### Dissimilarity based selection ###          ------          euclidean norm ::: sqrt(sum((y_i - x_i)^2));
+    #                                           X = orig_pop;
+    #                                           Y = mod_pop;
+    #                                           D_cut = d_cut
+
+    for {p in POPULATION_SET}
+    {
+        let d_min := 1e6;
+
+        for {j in POPULATION_SET}
+        {
+            let d_curr := 0;
+            
+            let {i in DIMENSION_SET} d_curr := d_curr + (mod_pop[p,i] - orig_pop[j,i])^2;
+            let d_curr := sqrt(d_curr);
+
+            if (d_curr < d_min) then
+            {
+                let d_min := d_curr;
+                let closest := j;
+            }
+        }
+
+        let max_set := {k in POPULATION_SET: orig_value[k] = max {j in POPULATION_SET} orig_value[j]};  # maxim function value of the original population
+        let min_set := {k in POPULATION_SET: orig_value[k] = min {j in POPULATION_SET} orig_value[j]};  # minimum function value of the original population
+
+        let max_index := first(max_set);
+        let min_index := first(min_set);
+            
+        # minimum distance found
+        if (d_min > d_cut) then                                         # if the point is far enough
+        {
+            if (mod_value[p] < orig_value[min_index]) then              # if its function value is smaller then the minimum
+            {
+                if (debugging_print == 1) then printf "\t\t%f < %f\n", mod_value[p], orig_value[min_index] > (output);
+             
+                if (curr_p < max_p) then                                # if there's still space
+                {
+                    if (debugging_print == 1) then printf "\t\t\tUpdate: adding point to the population\n" > (output);
+                    let curr_p := curr_p + 1;                           # increase the population
+                    let {i in DIMENSION_SET} orig_pop[curr_p,i] := mod_pop[p,i];        # add the new point to the population
+                    let orig_value[curr_p] := mod_value[p];
+                    let n_improve := -1;                                # reset number of improvements
+                    let pert[curr_p] := base_pert;                      # reset its perturbation range
+                }
+                else                                                    # otherwise remove the maximum
+                {
+                    if (debugging_print == 1) then printf "\t\t\tUpdate: no more space in the population, replacing the maximum\n" > (output);
+                    let {i in DIMENSION_SET} orig_pop[max_index, i] := mod_pop[p, i]; 
+                    let orig_value[max_index] := mod_value[p];
+                    let n_improve := -1;
+                    let pert[max_index] := base_pert;                       # reset the perturbation range
+                }
+            }
+            else if (mod_value[p] < orig_value[max_index]) then              # modified_value < original_value => original_point = modified_point
+            {
+                if (debugging_print == 1) then printf "\t\tUpdate: replacing the maximum point\n" > (output);
+                let orig_value[max_index] := mod_value[p];
+                let {i in DIMENSION_SET} orig_pop[max_index, i] := mod_pop[p, i]; 
+                let n_improve := -1;
+                let pert[max_index] := base_pert;                       # reset the perturbation range
+            }
+        }
+        else
+        {
+             if (mod_value[p] < orig_value[p]) then
+             {
+                 if (debugging_print == 1) then printf "\tUpdate: updating closest point (%f --> %f)\n", orig_value[p], mod_value[p] > (output);
+                 let {i in DIMENSION_SET} orig_pop[p,i] := mod_pop[p,i];
+                 let orig_value[p] := mod_value[p];
+                 let n_improve := -1;
+                 let pert[p] := base_pert;
+             }
+             #if (mod_value[p] < orig_value[closest]) then
+             #{
+             #    if (debugging_print == 1) then printf "\tUpdate: updating closest point (%f --> %f)\n", orig_value[closest], mod_value[p] > (output);
+             #    let {i in DIMENSION_SET} orig_pop[closest,i] := mod_pop[p,i];
+             #    let orig_value[closest] := mod_value[p];
+             #    let n_improve := -1;
+             #    let pert[closest] := base_pert;
+             #}
+             else
+                 let pert[p] := min(pert[p]*pert_rate, max_pert);
+        }
+    }
+
+    let n_improve := n_improve + 1;
+    let d_cut := d_base*(1 - n_improve/max_n_improve);
+    let f_min := min{p in POPULATION_SET} orig_value[p];
+    let f_max := max{p in POPULATION_SET} orig_value[p];
+    if (usefull_print == 1) then printf "n_improve: %d\td_cut: %f\tf_min: %f\tf_max: %f\n", n_improve, d_cut, f_min, f_max;
+
+    if ((f_min - minimum) <= tollerance) then let convergence := 1;
+    if (_total_solve_elapsed_time > timeout) then
+    {
+        printf "==> N: %d\tTimeout expired (%d seconds). Aborting\n", N, timeout;
+        printf "##################################################\n\n" > (output);
+        exit;
+    }
+
+}       while (n_improve < max_n_improve and convergence == 0);
+
+let min_fx_set := {k in POPULATION_SET: orig_value[k] = min {j in POPULATION_SET} orig_value[j]};
+printf "\n\n##################################################\n" > (output);
+#printf "Initialization time:\t%f\nAlgorithm time:\t\t%f\nTotal elapsed time:\t%f\n\n", start_time, _total_solve_elapsed_time - start_time, _total_solve_elapsed_time;
+printf "N: %d\n", N;
+printf "Total elapsed time:\t%f\n", _total_solve_elapsed_time > (output);
+printf "Population size: %d/%d\nMax number of improvements: %d\n", curr_p, max_p, max_n_improve > (output);
+printf "Start_pert: %f\tBase_pert: %f\tPert_rate: %f\n", start_pert, base_pert, pert_rate > (output); 
+
+if (LJ) then
+{
+   # printf "\nStarting population:\n" > (output);
+   # for {p in 1 .. start_p}
+   # {
+   #     printf "\t[" > (output);
+   #     for {i in 1 .. N}
+   #         printf "%.3f, %.3f, %.3f", st_pop[p,(i-1)*3 + 1], st_pop[p,(i-1)*3 + 2], st_pop[p,(i-1)*3 + 3] > (output);
+   #     printf "\b\b]\n" > (output);
+   # }
+   # printf "\n" > (output);        
+    printf "Optimal point:\n" > (output);
+    for {i in 1 .. N} printf "\tx[%d]\t %f\t%f\t%f\n", i, orig_pop[first(min_fx_set), (i-1)*3 + 1], orig_pop[first(min_fx_set), (i-1)*3 + 2], orig_pop[first(min_fx_set), (i-1)*3 + 3] > (output);
+    printf "\nFunction value:\t%f", orig_value[first(min_fx_set)] > (output);
+    printf "\nOptimum value:\t%f\n", minimum > (output);
+    if (convergence == 1) then
+        printf "Convergence: YES" > (output);
+    else
+        printf "Convergenze: NO\t(GAP: %f)", orig_value[first(min_fx_set)] - minimum > (output);
+    printf "\n##################################################\n\n" > (output);
+}
+else
+{
+    printf "\nStarting population:\n";
+    for {p in 1 .. start_p}
+    {
+        printf "\t[";
+        for {i in DIMENSION_SET}
+            printf "%.3f, ", st_pop[p,i];
+        printf "\b\b]\n";
+    }
+    printf "\n";        
+    printf "Optimal point:\n";
+    for {i in DIMENSION_SET} printf "\tx[%d]\t %f\n", i, orig_pop[first(min_fx_set), i];
+    printf "\nFunction value:\t%f", orig_value[first(min_fx_set)];
+    printf "\nOptimum value:\t%f\n", minimum;
+    if (convergence == 1) then
+        printf "Convergence: YES";
+    else
+        printf "Convergenze: NO\t(GAP: %f)", orig_value[first(min_fx_set)] - minimum;
+    printf "\n##################################################\n\n";
+}
+
+printf "\tN: %d\n", N;
+if (convergence == 1) then
+    printf "\tConvergence: YES\n";
+else
+    printf "\tConvergence: NO\t(GAP: %f)\n", orig_value[first(min_fx_set)] - minimum > (output);
+
+printf "\tTotal elapsed time:\t%f\n", _total_solve_elapsed_time;
+printf "##################################################\n\n";
