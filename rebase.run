@@ -57,9 +57,9 @@ param closest;
 param timeout;
 param debugging_print;
 param usefull_print;
-let debugging_print := 1;
+let debugging_print := 0;
 let usefull_print := 0;
-let timeout := 5*60;
+let timeout := 30*60;
 #####################################
 
 /* Initialization starts here */
@@ -208,13 +208,12 @@ repeat
     if (usefull_print == 1) then printf "n_improve: %d\td_cut: %f\tf_min: %f\tf_max: %f\n", n_improve, d_cut, f_min, f_max;
 
     if ((f_min - minimum) <= tollerance) then let convergence := 1;
-#    if (f_min < minimum) then printf "==> WTF\t %f is smaller than %f\n", f_min, minimum;
-    if (_total_solve_elapsed_time > timeout) then
-    {
-        printf "\tTimeout expired (%d seconds). Aborting\n\n", timeout;
-        let n_improve := max_n_improve;
-        break;
-    }
+    #if (_total_solve_elapsed_time > timeout) then
+    #{
+    #    printf "\tTimeout expired (%d seconds). Aborting\n\n", timeout;
+    #    let n_improve := max_n_improve;
+    #    break;
+    #}
 }       while (n_improve < max_n_improve and convergence == 0);
 
 let min_fx_set := {k in POPULATION_SET: orig_value[k] = min {j in POPULATION_SET} orig_value[j]};
